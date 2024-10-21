@@ -13,11 +13,11 @@ func _ready():
 func add_point():
 	score += 1
 	if score == 1:
-		score_label.text = "Obtuviste una sola moneda! Aún te faltan "  + str(MAX_COINS - score) + "."
+		score_label.text = "Obtuviste una sola moneda! Aún te faltan "  + str(MAX_COINS - score)
 	elif (MAX_COINS - score) > 1:
-		score_label.text = "Obtuviste " + str(score) + " monedas! Pero aún te faltan "  + str(MAX_COINS - score) + "."
+		score_label.text = "Obtuviste " + str(score) + " monedas! Pero aún te faltan "  + str(MAX_COINS - score)
 	elif (MAX_COINS - score) == 1:
-		score_label.text = "Obtuviste " + str(score) + " monedas! Pero aún te falta una."
+		score_label.text = "Obtuviste " + str(score) + " monedas! Pero aún te falta una"
 	else:
 		score_label.text = "Obtuviste todas las monedas!"
 	update_score()
