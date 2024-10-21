@@ -5,6 +5,7 @@ const JUMP_VELOCITY = -300.0
 const MAX_JUMPS = 2
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var timer: Timer = $Timer
 
 var jumps = 0
 var direction = 0
@@ -50,15 +51,20 @@ func _physics_process(delta: float) -> void:
 			velocity.x = direction * SPEED
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
-
+		
 		move_and_slide()
 
-func addHealth(health = 1):
-	life += health
-	
-	
-func removeHealth(health = 1):
-	life -= health
+func addLife(amount = 1):
+	life += amount
+
+func removeLife(amount = 1):
+	life -= amount
 	if life <= 0 && isDead == false:
 		isDead = true
 		animated_sprite.play("dead")
+		Engine.time_scale = 0.5
+		timer.start()
+
+func _on_timer_timeout() -> void:
+	Engine.time_scale = 1.0
+	get_tree().reload_current_scene()
