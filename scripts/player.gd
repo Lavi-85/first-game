@@ -4,6 +4,7 @@ const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 const MAX_JUMPS = 2
 
+@onready var hud_life: Label = %HUDLife
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var timer: Timer = $Timer
 
@@ -12,6 +13,9 @@ var direction = 0
 var isDead = false
 var life = 1
 
+func _ready():
+	updateLife()
+	
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
@@ -56,14 +60,19 @@ func _physics_process(delta: float) -> void:
 
 func addLife(amount = 1):
 	life += amount
+	updateLife()
 
 func removeLife(amount = 1):
 	life -= amount
+	updateLife()
 	if life <= 0 && isDead == false:
 		isDead = true
 		animated_sprite.play("dead")
 		Engine.time_scale = 0.5
 		timer.start()
+
+func updateLife():
+	hud_life.text = "Vidas: " + str(life)
 
 func _on_timer_timeout() -> void:
 	Engine.time_scale = 1.0
